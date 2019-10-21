@@ -15,7 +15,6 @@
 		BB3036E82356882000B3670C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB3036E72356882000B3670C /* Assets.xcassets */; };
 		BB3036EB2356882000B3670C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB3036E92356882000B3670C /* LaunchScreen.storyboard */; };
 		BB95E8CF23591EB00042C4C5 /* imageSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB95E8CE23591EB00042C4C5 /* imageSelectionCollectionViewCell.swift */; };
-		BBF55717235798C800A87F0A /* Adventurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF55716235798C800A87F0A /* Adventurer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +28,6 @@
 		BB3036EA2356882000B3670C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BB3036EC2356882000B3670C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB95E8CE23591EB00042C4C5 /* imageSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
-		BBF55716235798C800A87F0A /* Adventurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adventurer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +65,6 @@
 				BB3036DF2356881F00B3670C /* AddMemberViewController.swift */,
 				BB3036E12356881F00B3670C /* Main.storyboard */,
 				BB95E8CE23591EB00042C4C5 /* imageSelectionCollectionViewCell.swift */,
-				BBF55716235798C800A87F0A /* Adventurer.swift */,
 				BB3036E72356882000B3670C /* Assets.xcassets */,
 				BB3036E92356882000B3670C /* LaunchScreen.storyboard */,
 				BB3036EC2356882000B3670C /* Info.plist */,
@@ -150,7 +147,6 @@
 				BB3036E62356881F00B3670C /* group14_assignment6.xcdatamodeld in Sources */,
 				BB95E8CF23591EB00042C4C5 /* imageSelectionCollectionViewCell.swift in Sources */,
 				BB3036E02356881F00B3670C /* AddMemberViewController.swift in Sources */,
-				BBF55717235798C800A87F0A /* Adventurer.swift in Sources */,
 				BB3036DC2356881F00B3670C /* AppDelegate.swift in Sources */,
 				BB3036DE2356881F00B3670C /* SceneDelegate.swift in Sources */,
 			);
