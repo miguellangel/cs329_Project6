@@ -15,7 +15,9 @@ class AdventurersTableViewCell: UITableViewCell {
     @IBOutlet weak var professionLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var attackLabel: UILabel!
+    @IBOutlet weak var attackScoreLabel: UILabel!
     @IBOutlet weak var hpLabel: UILabel!
+    @IBOutlet weak var hpScoreLabel: UILabel!
     @IBOutlet weak var characterImageView: UIImageView!
     
     override func awakeFromNib() {

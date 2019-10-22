@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		440A9CD7235E7CD500ED1CED /* Adventurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A9CD6235E7CD500ED1CED /* Adventurer.swift */; };
 		957BF448235D186200AAF9FC /* QuestLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957BF447235D186200AAF9FC /* QuestLogViewController.swift */; };
 		95942DA2235BC31D002AA7BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95942DA1235BC31D002AA7BF /* AppDelegate.swift */; };
 		95942DA7235BC31D002AA7BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95942DA5235BC31D002AA7BF /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		440A9CD6235E7CD500ED1CED /* Adventurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adventurer.swift; sourceTree = "<group>"; };
 		957BF447235D186200AAF9FC /* QuestLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestLogViewController.swift; sourceTree = "<group>"; };
 		95942D9E235BC31D002AA7BF /* group14_assignment6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = group14_assignment6.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95942DA1235BC31D002AA7BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				95942DA5235BC31D002AA7BF /* Main.storyboard */,
 				95942DB8235D0B5F002AA7BF /* AdventurersTableViewController.swift */,
 				95942DBA235D0FC9002AA7BF /* AdventurersTableViewCell.swift */,
+				440A9CD6235E7CD500ED1CED /* Adventurer.swift */,
 				95942DB6235CFD75002AA7BF /* NewAdventurerViewController.swift */,
 				957BF447235D186200AAF9FC /* QuestLogViewController.swift */,
 				95942DAB235BC320002AA7BF /* Assets.xcassets */,
@@ -148,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95942DAA235BC31D002AA7BF /* group14_assignment6.xcdatamodeld in Sources */,
+				440A9CD7235E7CD500ED1CED /* Adventurer.swift in Sources */,
 				95942DB9235D0B5F002AA7BF /* AdventurersTableViewController.swift in Sources */,
 				95942DB7235CFD75002AA7BF /* NewAdventurerViewController.swift in Sources */,
 				95942DA2235BC31D002AA7BF /* AppDelegate.swift in Sources */,
