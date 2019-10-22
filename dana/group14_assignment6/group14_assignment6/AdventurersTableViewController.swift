@@ -11,8 +11,12 @@ import UIKit
 class AdventurersTableViewController: UITableViewController {
     
     var adventurers = [
-        Adventurer(name: "Cloud", level: 5, profession: "SOLDIER", attackScore: 3.40, hpScore: 105, image: "cloudImage")
-        
+        Adventurer(name: "Cloud", level: 5, profession: "SOLDIER", attackScore: 3.40, hpScore: 105, image: "cloudImage"),
+        Adventurer(name: "Tifa", level: 5, profession: "Bartender", attackScore: 3.78, hpScore: 98, image: "tifaImage"),
+        Adventurer(name: "Yuffie", level: 4, profession: "Thief", attackScore: 2.99, hpScore: 99, image: "yuffieImage"),
+        Adventurer(name: "Vincent", level: 3, profession: "Store Clerk", attackScore: 2.00, hpScore: 70, image: "vincentImage"),
+        Adventurer(name: "Link", level: 9, profession: "Archer", attackScore: 4.86, hpScore: 110, image: "linkImage")
+
     ]
 
     override func viewDidLoad() {
@@ -29,7 +33,7 @@ class AdventurersTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return adventurers.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,12 +46,16 @@ class AdventurersTableViewController: UITableViewController {
         
         // Configure the cell
         //let headline = headlines[indexPath.row]
-        cell.nameLabel?.text = "Douglas"
+        let adventurer = adventurers[indexPath.section]
         
-        cell.professionLabel?.text = "Blacksmith"
-        
-        cell.characterImageView?.image = UIImage(named: "defaultPhoto")
-        
+        cell.nameLabel.text = adventurer.name
+        cell.levelLabel.text = "\(adventurer.level)"
+        cell.professionLabel.text = adventurer.profession
+        cell.attackLabel.text = "Attack:"
+        cell.attackScoreLabel.text = "\(adventurer.attackScore)"
+        cell.hpLabel.text = "HP:"
+        cell.hpScoreLabel.text = "\(adventurer.hpScore)"
+        cell.imageView?.image = UIImage(named: adventurer.image)
         
         return cell
     }
