@@ -10,12 +10,14 @@ import UIKit
 import os.log
 
 
-class NewAdventurerViewController: UIViewController, UITextFieldDelegate {
-    
+class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    let cellIdentifier = "imageSelection"
     //MARK: Properties
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var professionTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var myCollectionView: UICollectionView!
+    
     
     
     override func viewDidLoad() {
@@ -25,6 +27,10 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate {
         nameTextField.delegate = self
         professionTextField.delegate = self
         
+//        self.myCollectionView.register(imageSelectionCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier) //THIS CRASHES THE PROGRAM
+        myCollectionView.delegate = self
+        myCollectionView.dataSource = self
+        
     }
     
     //MARK: UITextFieldDelegate
@@ -32,6 +38,18 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate {
         // Hide the keyboard.
         textField.resignFirstResponder()
         return true
+    }
+    
+    //MARK: - CollectionView
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! imageSelectionCollectionViewCell
+        
+        cell.image.image = UIImage(named: "defaultPhoto")
+        return cell
     }
     
     // MARK: - Navigation

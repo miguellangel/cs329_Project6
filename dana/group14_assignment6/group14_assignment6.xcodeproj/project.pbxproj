@@ -17,6 +17,7 @@
 		95942DB7235CFD75002AA7BF /* NewAdventurerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95942DB6235CFD75002AA7BF /* NewAdventurerViewController.swift */; };
 		95942DB9235D0B5F002AA7BF /* AdventurersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95942DB8235D0B5F002AA7BF /* AdventurersTableViewController.swift */; };
 		95942DBB235D0FC9002AA7BF /* AdventurersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95942DBA235D0FC9002AA7BF /* AdventurersTableViewCell.swift */; };
+		BB3CD1C4235E805F00D46F8B /* imageSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3CD1C3235E805F00D46F8B /* imageSelectionCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		95942DB6235CFD75002AA7BF /* NewAdventurerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAdventurerViewController.swift; sourceTree = "<group>"; };
 		95942DB8235D0B5F002AA7BF /* AdventurersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurersTableViewController.swift; sourceTree = "<group>"; };
 		95942DBA235D0FC9002AA7BF /* AdventurersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventurersTableViewCell.swift; sourceTree = "<group>"; };
+		BB3CD1C3235E805F00D46F8B /* imageSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				95942DBA235D0FC9002AA7BF /* AdventurersTableViewCell.swift */,
 				440A9CD6235E7CD500ED1CED /* Adventurer.swift */,
 				95942DB6235CFD75002AA7BF /* NewAdventurerViewController.swift */,
+				BB3CD1C3235E805F00D46F8B /* imageSelectionCollectionViewCell.swift */,
 				957BF447235D186200AAF9FC /* QuestLogViewController.swift */,
 				95942DAB235BC320002AA7BF /* Assets.xcassets */,
 				95942DAD235BC320002AA7BF /* LaunchScreen.storyboard */,
@@ -151,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95942DAA235BC31D002AA7BF /* group14_assignment6.xcdatamodeld in Sources */,
+				BB3CD1C4235E805F00D46F8B /* imageSelectionCollectionViewCell.swift in Sources */,
 				440A9CD7235E7CD500ED1CED /* Adventurer.swift in Sources */,
 				95942DB9235D0B5F002AA7BF /* AdventurersTableViewController.swift in Sources */,
 				95942DB7235CFD75002AA7BF /* NewAdventurerViewController.swift in Sources */,
