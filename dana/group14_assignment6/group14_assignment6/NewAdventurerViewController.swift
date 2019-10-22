@@ -18,8 +18,9 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     //MARK: Properties
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var professionTextField: UITextField!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var myCollectionView: UICollectionView!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
     
     
     
@@ -33,17 +34,29 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
 //        self.myCollectionView.register(imageSelectionCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier) //THIS CRASHES THE PROGRAM
         myCollectionView.delegate = self
         myCollectionView.dataSource = self
+        saveButton.isEnabled = false
         
     }
     
     //MARK: UITextFieldDelegate
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Disable the Save button while editing.
+        saveButton.isEnabled = false
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide the keyboard.
         textField.resignFirstResponder()
+        
+        //Check if both textfields and a picture is selected.
+        if (nameTextField.text != "") && (professionTextField.text != "") {
+            saveButton.isEnabled = true
+        }
+        
         return true
     }
     
-    //MARK: - CollectionView
+    //MARK: - UICollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return characters.count
     }
@@ -53,6 +66,12 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
         
         cell.image.image = UIImage(named: "\(characters[indexPath.item])")
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Selected")
+    }
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
     }
     
     // MARK: - Navigation
