@@ -11,11 +11,11 @@ import UIKit
 class AdventurersTableViewController: UITableViewController {
     
     var adventurers = [
-        Adventurer(name: "Cloud", level: 5, profession: "SOLDIER", attackScore: 3.40, hpScore: 105, image: "cloudImage"),
-        Adventurer(name: "Tifa", level: 5, profession: "Bartender", attackScore: 3.78, hpScore: 98, image: "tifaImage"),
-        Adventurer(name: "Yuffie", level: 4, profession: "Thief", attackScore: 2.99, hpScore: 99, image: "yuffieImage"),
-        Adventurer(name: "Vincent", level: 3, profession: "Store Clerk", attackScore: 2.00, hpScore: 70, image: "vincentImage"),
-        Adventurer(name: "Link", level: 9, profession: "Archer", attackScore: 4.86, hpScore: 110, image: "linkImage")
+        Adventurer(name: "Cloud", level: 5, profession: "SOLDIER", attackScore: 3.40, hpScore: "105/105", image: "cloudImage"),
+        Adventurer(name: "Tifa", level: 5, profession: "Bartender", attackScore: 3.78, hpScore: "98/98", image: "tifaImage"),
+        Adventurer(name: "Yuffie", level: 4, profession: "Thief", attackScore: 2.99, hpScore: "99/99", image: "yuffieImage"),
+        Adventurer(name: "Vincent", level: 3, profession: "Store Clerk", attackScore: 2.00, hpScore: "70/70", image: "vincentImage"),
+        Adventurer(name: "Link", level: 9, profession: "Archer", attackScore: 4.86, hpScore: "110/110", image: "linkImage")
 
     ]
 

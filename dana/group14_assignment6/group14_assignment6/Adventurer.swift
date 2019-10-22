@@ -15,10 +15,10 @@ class Adventurer {
     var level: Int
     var profession: String
     var attackScore: Float
-    var hpScore: Float
+    var hpScore: String
     var image: String
     
-    init(name: String, level: Int, profession: String, attackScore: Float, hpScore: Float, image: String){
+    init(name: String, level: Int, profession: String, attackScore: Float, hpScore: String, image: String){
         
         self.name = name
         self.level = level
