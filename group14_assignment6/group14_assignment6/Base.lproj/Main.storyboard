@@ -24,8 +24,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dyx-AS-3lm">
-                                            <rect key="frame" x="169" y="11" width="54" height="20"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dyx-AS-3lm">
+                                            <rect key="frame" x="169" y="11" width="180" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -83,7 +84,6 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="fr1-J0-b5O" firstAttribute="leading" secondItem="CGa-4o-8hN" secondAttribute="leadingMargin" id="N3O-xK-cXC"/>
-                                        <constraint firstItem="Dyx-AS-3lm" firstAttribute="leading" secondItem="fr1-J0-b5O" secondAttribute="trailing" constant="21" id="TzH-Ux-KpW"/>
                                         <constraint firstItem="fr1-J0-b5O" firstAttribute="top" secondItem="CGa-4o-8hN" secondAttribute="topMargin" id="wAj-HK-cL1"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -395,7 +395,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="checkmark.seal.fill" catalog="system" width="64" height="60"/>
+        <image name="checkmark.seal.fill" catalog="system" width="32" height="32"/>
         <image name="defaultPhoto" width="320" height="320"/>
     </resources>
 </document>
