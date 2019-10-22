@@ -11,6 +11,9 @@ import os.log
 
 
 class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    let characters = ["cloudImage", "tifaImage", "vincentImage", "yuffieImage", "linkImage"]
+    
     let cellIdentifier = "imageSelection"
     //MARK: Properties
     @IBOutlet weak var nameTextField: UITextField!
@@ -42,13 +45,13 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     
     //MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return characters.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! imageSelectionCollectionViewCell
         
-        cell.image.image = UIImage(named: "defaultPhoto")
+        cell.image.image = UIImage(named: "\(characters[indexPath.item])")
         return cell
     }
     
