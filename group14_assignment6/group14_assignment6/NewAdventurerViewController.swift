@@ -8,11 +8,13 @@
 
 import UIKit
 import os.log
+import CoreData
 
 
 class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let characters = ["cloudImage", "tifaImage", "vincentImage", "yuffieImage", "linkImage"]
+    var newAdventurer : NSManagedObject?
     
     let cellIdentifier = "imageSelection"
     //MARK: Properties
@@ -74,6 +76,44 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
     }
     
+    //MARK: - Actions
+    @IBAction func addNewAdventurer(_ sender: UIButton) {
+        //newAdventurer = addAdventurer(name: nameTextField.text!, profession: professionTextField.text!, appearance: "linkImage")
+    }
+    
+    
+    //MARK: - Add Adventurer
+    func addAdventurer(name : String, profession : String, appearance : String) -> NSManagedObject {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: "Adventurerr", in: managedContext)
+        let adventurer = NSManagedObject(entity: entity!, insertInto: managedContext)
+        
+        adventurer.setValue(name, forKey: "name")
+        adventurer.setValue(profession, forKey: "profession")
+        adventurer.setValue(appearance, forKey: "appearance")
+        adventurer.setValue(1, forKey: "level")
+        
+        let attack = Int.random(in: 0...5)
+        let hp = Int.random(in: 90...150)
+        
+        adventurer.setValue(attack , forKey: "attack")
+        adventurer.setValue(hp, forKey: "currentHP")
+        adventurer.setValue(hp, forKey: "totalHP")
+        
+        do {
+            try managedContext.save()
+        } catch {
+            let nserror = error as NSError
+            NSLog("Unable to save \(nserror), \(nserror.userInfo)")
+            abort()
+        }
+        
+        return adventurer
+        
+        
+    }
+    
     // MARK: - Navigation
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -86,7 +126,7 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
         super.prepare(for: segue, sender: sender)
         
         // Configure the destination view controller only when the save button is pressed.
-        guard let button = sender as? UIBarButtonItem, button === saveButton else {
+        guard let button = sender as? UIButton, button === saveButton else {
             os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
             return
         }

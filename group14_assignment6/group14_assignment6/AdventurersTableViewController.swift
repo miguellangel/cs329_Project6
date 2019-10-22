@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import CoreData
 
 class AdventurersTableViewController: UITableViewController {
-    
+    var people = [NSManagedObject]()
     var adventurers = [
         Adventurer(name: "Cloud", level: 5, profession: "SOLDIER", attackScore: 3.40, hpScore: "105/105", image: "cloudImage"),
         Adventurer(name: "Tifa", level: 5, profession: "Bartender", attackScore: 3.78, hpScore: "98/98", image: "tifaImage"),
@@ -62,7 +63,7 @@ class AdventurersTableViewController: UITableViewController {
     
     // Set table row height
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 121
+        return 128
     }
 
     // MARK: Actions
@@ -77,14 +78,17 @@ class AdventurersTableViewController: UITableViewController {
         }
     
     @IBAction func unwindToTableViewWithSavedData(sender: UIStoryboardSegue) {
-        //if let sourceViewController = sender.source as? NewAdventurerViewController, //let meal = sourceViewController.meal{
-            
-            // Add a new meal.
-            //let newIndexPath = IndexPath(row: meals.count, section: 0)
-            
-            //meals.append(meal)
-            //tableView.insertRows(at: [newIndexPath], with: .automatic)
-        }
+        
+        // Code to increase number of rows? -- Miguel
+//        if let sourceViewController = sender.source as? NewAdventurerViewController,
+//            let newAdventurer = sourceViewController.newAdventurer {
+//                let newIndexPath = IndexPath(row: people.count, section: 0)
+//                people.append(newAdventurer)
+//
+//            tableView.insertRows(at: [newIndexPath], with: .automatic)
+//        }
+        
+    }
     
 
     /*

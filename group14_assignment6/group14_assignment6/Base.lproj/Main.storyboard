@@ -329,6 +329,7 @@
                                         </constraints>
                                         <state key="normal" title="Save"/>
                                         <connections>
+                                            <action selector="addNewAdventurer:" destination="Klp-gS-drU" eventType="touchUpInside" id="xOq-Ze-LLo"/>
                                             <segue destination="dND-nq-ebT" kind="unwind" unwindAction="unwindToTableViewWithSavedDataWithSender:" id="GvN-Zv-MRy"/>
                                         </connections>
                                     </button>
