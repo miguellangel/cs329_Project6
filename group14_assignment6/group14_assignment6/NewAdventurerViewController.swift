@@ -15,6 +15,7 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     
     let characters = ["cloudImage", "tifaImage", "vincentImage", "yuffieImage", "linkImage"]
     var newAdventurer : NSManagedObject?
+    var finalAdventurer : NSManagedObject?
     
     let cellIdentifier = "imageSelection"
     //MARK: Properties
@@ -99,23 +100,15 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     
     //MARK: - Actions
     @IBAction func addNewAdventurer(_ sender: UIButton) {
-        newAdventurer = addAdventurer(name: nameTextField.text!, profession: professionTextField.text!, appearance: appearance!)
-        
-    
-    }
-    
-    
-    //MARK: - Add Adventurer
-    func addAdventurer(name : String, profession : String, appearance : String) -> NSManagedObject {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return NSManagedObject()
+            return
         }
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Adventurerr", in: managedContext)
         let adventurer = NSManagedObject(entity: entity!, insertInto: managedContext)
         
-        adventurer.setValue(name, forKey: "name")
-        adventurer.setValue(profession, forKey: "profession")
+        adventurer.setValue(nameTextField.text!, forKey: "name")
+        adventurer.setValue(professionTextField.text!, forKey: "profession")
         adventurer.setValue(appearance, forKey: "appearance")
         adventurer.setValue(1, forKey: "level")
         
@@ -134,10 +127,45 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
             abort()
         }
         
-        return adventurer
+        newAdventurer = adventurer
         
-        
+    
     }
+    
+    
+    //MARK: - Add Adventurer
+//    func addAdventurer(name : String, profession : String, appearance : String) -> NSManagedObject {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return NSManagedObject()
+//        }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let entity = NSEntityDescription.entity(forEntityName: "Adventurerr", in: managedContext)
+//        let adventurer = NSManagedObject(entity: entity!, insertInto: managedContext)
+//
+//        adventurer.setValue(name, forKey: "name")
+//        adventurer.setValue(profession, forKey: "profession")
+//        adventurer.setValue(appearance, forKey: "appearance")
+//        adventurer.setValue(1, forKey: "level")
+//
+//        let attack = Int.random(in: 0...5)
+//        let hp = Int.random(in: 90...150)
+//
+//        adventurer.setValue(attack , forKey: "attack")
+//        adventurer.setValue(hp, forKey: "currentHP")
+//        adventurer.setValue(hp, forKey: "totalHP")
+//
+//        do {
+//            try managedContext.save()
+//        } catch {
+//            let nserror = error as NSError
+//            NSLog("Unable to save \(nserror), \(nserror.userInfo)")
+//            abort()
+//        }
+//
+//        return adventurer
+//
+//
+//    }
     
     // MARK: - Navigation
     
@@ -155,10 +183,7 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
             os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
             return
         }
-        
-        let name = nameTextField.text ?? ""
-        let profession = professionTextField.text ?? ""
-
+        finalAdventurer = newAdventurer
     }
     
     /*

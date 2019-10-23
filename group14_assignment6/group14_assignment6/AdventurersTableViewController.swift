@@ -78,15 +78,15 @@ class AdventurersTableViewController: UITableViewController {
         }
     
     @IBAction func unwindToTableViewWithSavedData(sender: UIStoryboardSegue) {
-        print("CODE WORKS UP TILL HERE")
         // Code to increase number of rows? -- Miguel
-//        if let sourceViewController = sender.source as? NewAdventurerViewController,
-//            let newAdventurer = sourceViewController.newAdventurer {
-//                let newIndexPath = IndexPath(row: people.count, section: 0)
-//                people.append(newAdventurer)
-//
-//            tableView.insertRows(at: [newIndexPath], with: .automatic)
-//        }
+        if let sourceViewController = sender.source as? NewAdventurerViewController,
+            let newAdventurer = sourceViewController.finalAdventurer {
+                let newIndexPath = IndexPath(row: people.count, section: 0)
+                people.append(newAdventurer)
+            
+            // CODE WORKS UP TILL HERE; NEED TO REPLACE CURRENT TABLE VIEW CELL ITEMS WITH NSMANAGEDOBJECTS
+            //tableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
         
     }
     
