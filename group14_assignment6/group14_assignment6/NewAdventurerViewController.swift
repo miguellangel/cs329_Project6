@@ -26,6 +26,10 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     
     
     
+    var appearance : String?
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,13 +51,19 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // Hide the keyboard.
-        textField.resignFirstResponder()
+        // Check for empty strings of any length
+        var str_len = textField.text!.count
+        var empty = String(repeating: " ", count: str_len)
         
-        //Check if both textfields and a picture is selected.
-        if (nameTextField.text != "") && (professionTextField.text != "") {
-            saveButton.isEnabled = true
+        // clear empty string, ask to type a good name/class
+        if (textField.text == empty) {
+            textField.text = ""
+            textField.placeholder = "Make it interesting!"
+        } else {
+            // Hide the keyboard.
+            textField.resignFirstResponder()
         }
+        
         
         return true
     }
@@ -71,21 +81,36 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected")
+        // Get indexPath at which collection view item was selected
+        // is useful for accessing the name of the image selected
+        appearance = characters[indexPath[1]]
+        print("Selected appearance: \(appearance!)")
+        
+        let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! imageSelectionCollectionViewCell
+        
+        cell.isHighlighted = true
+        if (nameTextField.text != "") && (professionTextField.text != "") && cell.isHighlighted {
+            saveButton.isEnabled = true
+        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
     }
     
     //MARK: - Actions
     @IBAction func addNewAdventurer(_ sender: UIButton) {
-        //newAdventurer = addAdventurer(name: nameTextField.text!, profession: professionTextField.text!, appearance: "linkImage")
+        newAdventurer = addAdventurer(name: nameTextField.text!, profession: professionTextField.text!, appearance: appearance!)
+        
+    
     }
     
     
     //MARK: - Add Adventurer
     func addAdventurer(name : String, profession : String, appearance : String) -> NSManagedObject {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return NSManagedObject()
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Adventurerr", in: managedContext)
         let adventurer = NSManagedObject(entity: entity!, insertInto: managedContext)
         
@@ -133,12 +158,7 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
         
         let name = nameTextField.text ?? ""
         let profession = professionTextField.text ?? ""
-        //let photo = photoImageView.image
-        //let rating = ratingControl.rating
-        
-        // Set the meal to be passed to MealTableViewController after the unwind segue.
-        //SHOULD SET THIS TO ADVENTURER
-        //meal = Meal(name: name, photo: photo, rating: rating)
+
     }
     
     /*

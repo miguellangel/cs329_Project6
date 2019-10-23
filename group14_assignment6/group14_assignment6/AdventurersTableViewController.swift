@@ -78,7 +78,7 @@ class AdventurersTableViewController: UITableViewController {
         }
     
     @IBAction func unwindToTableViewWithSavedData(sender: UIStoryboardSegue) {
-        
+        print("CODE WORKS UP TILL HERE")
         // Code to increase number of rows? -- Miguel
 //        if let sourceViewController = sender.source as? NewAdventurerViewController,
 //            let newAdventurer = sourceViewController.newAdventurer {
