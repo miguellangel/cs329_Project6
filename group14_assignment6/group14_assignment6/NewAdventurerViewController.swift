@@ -15,6 +15,7 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     
     let characters = ["cloudImage", "tifaImage", "vincentImage", "yuffieImage", "linkImage"]
     var newAdventurer : NSManagedObject?
+    var finalAdventurer : NSManagedObject?
     
     let cellIdentifier = "imageSelection"
     //MARK: Properties
@@ -23,6 +24,10 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     @IBOutlet weak var myCollectionView: UICollectionView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
+    
+    
+    
+    var appearance : String?
     
     
     
@@ -47,13 +52,19 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // Hide the keyboard.
-        textField.resignFirstResponder()
+        // Check for empty strings of any length
+        var str_len = textField.text!.count
+        var empty = String(repeating: " ", count: str_len)
         
-        //Check if both textfields and a picture is selected.
-        if (nameTextField.text != "") && (professionTextField.text != "") {
-            saveButton.isEnabled = true
+        // clear empty string, ask to type a good name/class
+        if (textField.text == empty) {
+            textField.text = ""
+            textField.placeholder = "Make it interesting!"
+        } else {
+            // Hide the keyboard.
+            textField.resignFirstResponder()
         }
+        
         
         return true
     }
@@ -71,26 +82,33 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected")
+        // Get indexPath at which collection view item was selected
+        // is useful for accessing the name of the image selected
+        appearance = characters[indexPath[1]]
+        print("Selected appearance: \(appearance!)")
+        
+        let cell = myCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! imageSelectionCollectionViewCell
+        
+        cell.isHighlighted = true
+        if (nameTextField.text != "") && (professionTextField.text != "") && cell.isHighlighted {
+            saveButton.isEnabled = true
+        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
     }
     
     //MARK: - Actions
     @IBAction func addNewAdventurer(_ sender: UIButton) {
-        //newAdventurer = addAdventurer(name: nameTextField.text!, profession: professionTextField.text!, appearance: "linkImage")
-    }
-    
-    
-    //MARK: - Add Adventurer
-    func addAdventurer(name : String, profession : String, appearance : String) -> NSManagedObject {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Adventurerr", in: managedContext)
         let adventurer = NSManagedObject(entity: entity!, insertInto: managedContext)
         
-        adventurer.setValue(name, forKey: "name")
-        adventurer.setValue(profession, forKey: "profession")
+        adventurer.setValue(nameTextField.text!, forKey: "name")
+        adventurer.setValue(professionTextField.text!, forKey: "profession")
         adventurer.setValue(appearance, forKey: "appearance")
         adventurer.setValue(1, forKey: "level")
         
@@ -109,10 +127,45 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
             abort()
         }
         
-        return adventurer
+        newAdventurer = adventurer
         
-        
+    
     }
+    
+    
+    //MARK: - Add Adventurer
+//    func addAdventurer(name : String, profession : String, appearance : String) -> NSManagedObject {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return NSManagedObject()
+//        }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let entity = NSEntityDescription.entity(forEntityName: "Adventurerr", in: managedContext)
+//        let adventurer = NSManagedObject(entity: entity!, insertInto: managedContext)
+//
+//        adventurer.setValue(name, forKey: "name")
+//        adventurer.setValue(profession, forKey: "profession")
+//        adventurer.setValue(appearance, forKey: "appearance")
+//        adventurer.setValue(1, forKey: "level")
+//
+//        let attack = Int.random(in: 0...5)
+//        let hp = Int.random(in: 90...150)
+//
+//        adventurer.setValue(attack , forKey: "attack")
+//        adventurer.setValue(hp, forKey: "currentHP")
+//        adventurer.setValue(hp, forKey: "totalHP")
+//
+//        do {
+//            try managedContext.save()
+//        } catch {
+//            let nserror = error as NSError
+//            NSLog("Unable to save \(nserror), \(nserror.userInfo)")
+//            abort()
+//        }
+//
+//        return adventurer
+//
+//
+//    }
     
     // MARK: - Navigation
     
@@ -130,15 +183,7 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
             os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
             return
         }
-        
-        let name = nameTextField.text ?? ""
-        let profession = professionTextField.text ?? ""
-        //let photo = photoImageView.image
-        //let rating = ratingControl.rating
-        
-        // Set the meal to be passed to MealTableViewController after the unwind segue.
-        //SHOULD SET THIS TO ADVENTURER
-        //meal = Meal(name: name, photo: photo, rating: rating)
+        finalAdventurer = newAdventurer
     }
     
     /*
