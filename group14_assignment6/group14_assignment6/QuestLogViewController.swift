@@ -9,12 +9,38 @@
 import UIKit
 
 class QuestLogViewController: UIViewController {
+    
+    @IBOutlet weak var characterImage: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var levelLabel: UILabel!
+    @IBOutlet weak var occupationLabel: UILabel!
+    @IBOutlet weak var attackLabel: UILabel!
+    @IBOutlet weak var hpLabel: UILabel!
+    @IBOutlet weak var textView: UITextView!
+    
+    /*
+     This value is either passed by `MealTableViewController` in `prepare(for:sender:)`
+     or constructed as part of adding a new meal.
+     */
+    var adventurer: Adventurer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Set up views if editing an existing Meal.
+        if let adventurer = adventurer {
+            //navigationItem.title = meal.name
+            //characterImage.image = adventurer.image
+            nameLabel.text = adventurer.name
+            levelLabel.text = String(adventurer.level)
+            occupationLabel.text = adventurer.profession
+            attackLabel.text = String(adventurer.attackScore)
+            hpLabel.text = adventurer.hpScore
+            //photoImageView.image = meal.photo
+            //ratingControl.rating = meal.rating
+        }
     }
+    
     
 
     /*

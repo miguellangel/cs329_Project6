@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import os.log
 
 class AdventurersTableViewController: UITableViewController {
     var people = [NSManagedObject]()
@@ -67,7 +68,7 @@ class AdventurersTableViewController: UITableViewController {
     }
 
     // MARK: Actions
-    @IBAction func unwindToAdventurersList(sender: UIStoryboardSegue) {
+    //@IBAction func unwindToAdventurersList(sender: UIStoryboardSegue) {
         //if let sourceViewController = sender.source as? NewAdventurerViewController, //let meal = sourceViewController.meal{
             
             // Add a new meal.
@@ -75,7 +76,7 @@ class AdventurersTableViewController: UITableViewController {
             
             //meals.append(meal)
             //tableView.insertRows(at: [newIndexPath], with: .automatic)
-        }
+        //}
     
     @IBAction func unwindToTableViewWithSavedData(sender: UIStoryboardSegue) {
         // Code to increase number of rows? -- Miguel
@@ -126,14 +127,60 @@ class AdventurersTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        
+        switch(segue.identifier ?? "") {
+            
+        case "ShowDetail":
+            guard let questLogDetailViewController = segue.destination as? QuestLogViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            guard let selectedAdventurerCell = sender as? AdventurersTableViewCell else {
+                fatalError("Unexpected sender: \(String(describing: sender))")
+            }
+            
+            guard let indexPath = tableView.indexPath(for: selectedAdventurerCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            
+            let selectedAdventurer = adventurers[indexPath.section]
+            //print("Selected adventurer:", selectedAdventurer.name)
+            questLogDetailViewController.adventurer = selectedAdventurer
+            
+        default:
+            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
+        }
     }
-    */
 
+    // TESTING TESTING 123
+
+    /*
+    @IBAction func unwindToAdventurersList(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? QuestLogViewController, let adventurer = sourceViewController.adventurer {
+            
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                // Update an existing adventurer.
+                adventurers[selectedIndexPath.row] = adventurer
+                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+            }*/
+                /*
+            else {
+                // Add a new meal.
+                let newIndexPath = IndexPath(row: meals.count, section: 0)
+                
+                meals.append(meal)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)*
+            }*/
+    
+    
+
+    
 }
+
+
