@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os.log
 
 class QuestLogViewController: UIViewController {
     
@@ -18,6 +19,7 @@ class QuestLogViewController: UIViewController {
     @IBOutlet weak var attackLabel: UILabel!
     @IBOutlet weak var hpLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var endQuestButton: UIButton!
     
     /*
      This value is either passed by `MealTableViewController` in `prepare(for:sender:)`
@@ -34,7 +36,8 @@ class QuestLogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.text = "Beginning Quest...\n"
-        let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fireTimer(timer:)), userInfo: nil, repeats: true)
+        //instead of let timer =
+        self.timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fireTimer(timer:)), userInfo: nil, repeats: true)
         
         
         // Set up views for new Quest for selected adventurer.
@@ -52,20 +55,6 @@ class QuestLogViewController: UIViewController {
         
         self.adventurerLevel = Int(adventurer!.level)
     }
-    
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     @objc func fireTimer(timer: Timer) {
         // Leveling up
@@ -101,16 +90,45 @@ class QuestLogViewController: UIViewController {
         // Dead adventurer
         if adventurerHP <= 0 {
             textView.insertText("\(adventurer!.name) died! Quest ended.\n")
-            timer.invalidate()
-            //timer = nil
-            //stopTimer()
+            //timer.invalidate()
+            stopTimer(timer: timer)
         }
     }
-    /*
-    func stopTimer () {
-        timer!.invalidate()
+    
+    @objc func stopTimer(timer: Timer) {
+        timer.invalidate()
+    }
+    
+    @IBAction func endQuestEndsTimer(_ sender: UIButton) {
+        //print("End quest button has been pressed, timer called!")
+        stopTimer(timer: self.timer!)
+    }
+    
+     // MARK: - Navigation
+     
+     // This method lets you configure a view controller before it's presented.
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-    }*/
+        super.prepare(for: segue, sender: sender)
+        
+        // Configure the destination view controller only when the endQuestButton is pressed.
+        guard let button = sender as? UIButton, button === endQuestButton else {
+            os_log("The End Quest button was not pressed, cancelling", log: OSLog.default, type: .debug)
+            return
+        }
+        
+        //print("End quest button has been pressed, prepped for segue!")
+        
+        let name = nameLabel.text ?? ""
+        let photo = adventurer!.image
+        let level = Int(levelLabel.text!)
+        let profession = adventurer!.profession
+        let attack = adventurer!.attackScore
+        let hp = adventurer!.hpScore
+        
+        // Set the meal to be passed to MealTableViewController after the unwind segue.
+        adventurer = Adventurer(name: name, level: level!, profession: profession, attackScore: attack, hpScore: hp, image: photo)
+     }
 }
 
 

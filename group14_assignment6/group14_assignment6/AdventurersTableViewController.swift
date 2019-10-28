@@ -89,7 +89,19 @@ class AdventurersTableViewController: UITableViewController {
             //tableView.insertRows(at: [newIndexPath], with: .automatic)
         }
         
+        // Case for unwinding from Quest Log
+        if let sourceViewController = sender.source as? QuestLogViewController,
+            let adventurer = sourceViewController.adventurer {
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                // Update an existing adventurer with new level.
+                adventurers[selectedIndexPath.section] = adventurer
+                tableView.reloadSections(IndexSet(integersIn: 0...adventurers.count-1), with: .none)
+            }
+            
+        }
     }
+    
+    
     
 
     /*
@@ -157,6 +169,7 @@ class AdventurersTableViewController: UITableViewController {
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
         }
     }
+    
     
 }
 
