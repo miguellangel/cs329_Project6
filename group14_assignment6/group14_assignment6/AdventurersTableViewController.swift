@@ -13,11 +13,11 @@ import os.log
 class AdventurersTableViewController: UITableViewController {
     var people = [NSManagedObject]()
     var adventurers = [
-        Adventurer(name: "Cloud", level: 5, profession: "SOLDIER", attackScore: 3.40, hpScore: "105/105", image: "cloudImage"),
-        Adventurer(name: "Tifa", level: 5, profession: "Bartender", attackScore: 3.78, hpScore: "98/98", image: "tifaImage"),
-        Adventurer(name: "Yuffie", level: 4, profession: "Thief", attackScore: 2.99, hpScore: "99/99", image: "yuffieImage"),
-        Adventurer(name: "Vincent", level: 3, profession: "Store Clerk", attackScore: 2.00, hpScore: "70/70", image: "vincentImage"),
-        Adventurer(name: "Link", level: 9, profession: "Archer", attackScore: 4.86, hpScore: "110/110", image: "linkImage")
+        Adventurer(name: "Cloud", level: 5, profession: "SOLDIER", attackScore: 3.40, hpScore: "105", image: "cloudImage"),
+        Adventurer(name: "Tifa", level: 5, profession: "Bartender", attackScore: 3.78, hpScore: "98", image: "tifaImage"),
+        Adventurer(name: "Yuffie", level: 4, profession: "Thief", attackScore: 2.99, hpScore: "99", image: "yuffieImage"),
+        Adventurer(name: "Vincent", level: 3, profession: "Store Clerk", attackScore: 2.00, hpScore: "70", image: "vincentImage"),
+        Adventurer(name: "Link", level: 9, profession: "Archer", attackScore: 4.86, hpScore: "110", image: "linkImage")
 
     ]
 
@@ -56,7 +56,7 @@ class AdventurersTableViewController: UITableViewController {
         cell.attackLabel.text = "Attack:"
         cell.attackScoreLabel.text = "\(adventurer.attackScore)"
         cell.hpLabel.text = "HP:"
-        cell.hpScoreLabel.text = "\(adventurer.hpScore)"
+        cell.hpScoreLabel.text = "\(adventurer.hpScore)/\(adventurer.hpScore)"
         cell.imageView?.image = UIImage(named: adventurer.image)
         
         return cell
@@ -157,29 +157,6 @@ class AdventurersTableViewController: UITableViewController {
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
         }
     }
-
-    // TESTING TESTING 123
-
-    /*
-    @IBAction func unwindToAdventurersList(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? QuestLogViewController, let adventurer = sourceViewController.adventurer {
-            
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                // Update an existing adventurer.
-                adventurers[selectedIndexPath.row] = adventurer
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
-            }*/
-                /*
-            else {
-                // Add a new meal.
-                let newIndexPath = IndexPath(row: meals.count, section: 0)
-                
-                meals.append(meal)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)*
-            }*/
-    
-    
-
     
 }
 
