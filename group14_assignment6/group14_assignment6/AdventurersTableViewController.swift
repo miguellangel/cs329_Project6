@@ -8,15 +8,16 @@
 
 import UIKit
 import CoreData
+import os.log
 
 class AdventurersTableViewController: UITableViewController {
     var people = [NSManagedObject]()
     var adventurers = [
-        Adventurer(name: "Cloud", level: 5, profession: "SOLDIER", attackScore: 3.40, hpScore: "105/105", image: "cloudImage"),
-        Adventurer(name: "Tifa", level: 5, profession: "Bartender", attackScore: 3.78, hpScore: "98/98", image: "tifaImage"),
-        Adventurer(name: "Yuffie", level: 4, profession: "Thief", attackScore: 2.99, hpScore: "99/99", image: "yuffieImage"),
-        Adventurer(name: "Vincent", level: 3, profession: "Store Clerk", attackScore: 2.00, hpScore: "70/70", image: "vincentImage"),
-        Adventurer(name: "Link", level: 9, profession: "Archer", attackScore: 4.86, hpScore: "110/110", image: "linkImage")
+        Adventurer(name: "Cloud", level: 5, profession: "SOLDIER", attackScore: 3.40, hpScore: "105", image: "cloudImage"),
+        Adventurer(name: "Tifa", level: 5, profession: "Bartender", attackScore: 3.78, hpScore: "98", image: "tifaImage"),
+        Adventurer(name: "Yuffie", level: 4, profession: "Thief", attackScore: 2.99, hpScore: "99", image: "yuffieImage"),
+        Adventurer(name: "Vincent", level: 3, profession: "Store Clerk", attackScore: 2.00, hpScore: "70", image: "vincentImage"),
+        Adventurer(name: "Link", level: 9, profession: "Archer", attackScore: 4.86, hpScore: "110", image: "linkImage")
 
     ]
 
@@ -55,7 +56,7 @@ class AdventurersTableViewController: UITableViewController {
         cell.attackLabel.text = "Attack:"
         cell.attackScoreLabel.text = "\(adventurer.attackScore)"
         cell.hpLabel.text = "HP:"
-        cell.hpScoreLabel.text = "\(adventurer.hpScore)"
+        cell.hpScoreLabel.text = "\(adventurer.hpScore)/\(adventurer.hpScore)"
         cell.imageView?.image = UIImage(named: adventurer.image)
         
         return cell
@@ -67,7 +68,7 @@ class AdventurersTableViewController: UITableViewController {
     }
 
     // MARK: Actions
-    @IBAction func unwindToAdventurersList(sender: UIStoryboardSegue) {
+    //@IBAction func unwindToAdventurersList(sender: UIStoryboardSegue) {
         //if let sourceViewController = sender.source as? NewAdventurerViewController, //let meal = sourceViewController.meal{
             
             // Add a new meal.
@@ -75,7 +76,7 @@ class AdventurersTableViewController: UITableViewController {
             
             //meals.append(meal)
             //tableView.insertRows(at: [newIndexPath], with: .automatic)
-        }
+        //}
     
     @IBAction func unwindToTableViewWithSavedData(sender: UIStoryboardSegue) {
         // Code to increase number of rows? -- Miguel
@@ -88,7 +89,19 @@ class AdventurersTableViewController: UITableViewController {
             //tableView.insertRows(at: [newIndexPath], with: .automatic)
         }
         
+        // Case for unwinding from Quest Log
+        if let sourceViewController = sender.source as? QuestLogViewController,
+            let adventurer = sourceViewController.adventurer {
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                // Update an existing adventurer with new level.
+                adventurers[selectedIndexPath.section] = adventurer
+                tableView.reloadSections(IndexSet(integersIn: 0...adventurers.count-1), with: .none)
+            }
+            
+        }
     }
+    
+    
     
 
     /*
@@ -126,14 +139,38 @@ class AdventurersTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        
+        switch(segue.identifier ?? "") {
+            
+        case "ShowDetail":
+            guard let questLogDetailViewController = segue.destination as? QuestLogViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            guard let selectedAdventurerCell = sender as? AdventurersTableViewCell else {
+                fatalError("Unexpected sender: \(String(describing: sender))")
+            }
+            
+            guard let indexPath = tableView.indexPath(for: selectedAdventurerCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            
+            let selectedAdventurer = adventurers[indexPath.section]
+            //print("Selected adventurer:", selectedAdventurer.name)
+            questLogDetailViewController.adventurer = selectedAdventurer
+            
+        default:
+            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
+        }
     }
-    */
-
+    
+    
 }
+
+
