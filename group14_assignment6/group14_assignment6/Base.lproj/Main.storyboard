@@ -111,7 +111,7 @@
                     <navigationItem key="navigationItem" title="Adventurers" id="Hh6-MY-LJX">
                         <barButtonItem key="leftBarButtonItem" title="Add Member" id="Gae-GV-GFk">
                             <connections>
-                                <segue destination="Klp-gS-drU" kind="show" id="YHc-vM-3Tk"/>
+                                <segue destination="Klp-gS-drU" kind="show" identifier="newAdventurerRecruit" id="YHc-vM-3Tk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -204,7 +204,7 @@
                                 </state>
                                 <connections>
                                     <action selector="endQuestEndsTimer:" destination="9c3-gu-qui" eventType="touchUpInside" id="Hfq-dU-ieG"/>
-                                    <segue destination="YXm-Xu-JCW" kind="unwind" unwindAction="unwindToTableViewWithSavedDataWithSender:" id="2vE-4I-f6B"/>
+                                    <segue destination="YXm-Xu-JCW" kind="unwind" unwindAction="unwindToTableViewWithSavedDataWithSender:" id="mbN-ME-eF7"/>
                                 </connections>
                             </button>
                         </subviews>

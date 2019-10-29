@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18F2058" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Adventurerr" representedClassName="Adventurerr" syncable="YES" codeGenerationType="class">
-        <attribute name="appearance" optional="YES" attributeType="String"/>
-        <attribute name="attack" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="currentHP" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="profession" optional="YES" attributeType="String"/>
-        <attribute name="totalHP" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="appearance" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="attack" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="currentHP" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="name" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="profession" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="totalHP" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
     </entity>
     <elements>
-        <element name="Adventurerr" positionX="-54" positionY="-9" width="128" height="148"/>
+        <element name="Adventurerr" positionX="-54" positionY="-9" width="128" height="150"/>
     </elements>
 </model>

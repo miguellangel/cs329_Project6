@@ -11,53 +11,59 @@ import CoreData
 import os.log
 
 class AdventurersTableViewController: UITableViewController {
-    var people = [NSManagedObject]()
-    var adventurers = [
-        Adventurer(name: "Cloud", level: 5, profession: "SOLDIER", attackScore: 3.40, hpScore: "105", image: "cloudImage"),
-        Adventurer(name: "Tifa", level: 5, profession: "Bartender", attackScore: 3.78, hpScore: "98", image: "tifaImage"),
-        Adventurer(name: "Yuffie", level: 4, profession: "Thief", attackScore: 2.99, hpScore: "99", image: "yuffieImage"),
-        Adventurer(name: "Vincent", level: 3, profession: "Store Clerk", attackScore: 2.00, hpScore: "70", image: "vincentImage"),
-        Adventurer(name: "Link", level: 9, profession: "Archer", attackScore: 4.86, hpScore: "110", image: "linkImage")
-
-    ]
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    var adventurers = [NSManagedObject]()
+    
+    //Get data from the persistent store
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //1
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        //2
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "Adventurerr")
+        
+        //3
+        do {
+            adventurers = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
     }
-
+    
+    
+    
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+    
+    override func tableView(_ tableView: UITableView,
+                            numberOfRowsInSection section: Int) -> Int {
         return adventurers.count
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let person = adventurers[indexPath.row]
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: "AdventurersTableViewCell", for: indexPath) as! AdventurersTableViewCell
         
-        // Configure the cell
-        //let headline = headlines[indexPath.row]
-        let adventurer = adventurers[indexPath.section]
-        
-        cell.nameLabel.text = adventurer.name
-        cell.levelLabel.text = "\(adventurer.level)"
-        cell.professionLabel.text = adventurer.profession
         cell.attackLabel.text = "Attack:"
-        cell.attackScoreLabel.text = "\(adventurer.attackScore)"
         cell.hpLabel.text = "HP:"
-        cell.hpScoreLabel.text = "\(adventurer.hpScore)/\(adventurer.hpScore)"
-        cell.imageView?.image = UIImage(named: adventurer.image)
+        let imageName = person.value(forKeyPath: "appearance") as! String
+        
+        cell.nameLabel?.text = person.value(forKeyPath: "name") as? String
+        cell.professionLabel?.text = person.value(forKeyPath: "profession") as? String
+        cell.levelLabel.text = "\(person.value(forKeyPath: "level")!)"
+        var attack = person.value(forKey: "attack") as! Float
+        cell.attackScoreLabel.text = String(format: "%.2f", attack)
+        cell.hpScoreLabel.text = "\(person.value(forKeyPath: "currentHP")!)" + "/" + "\(person.value(forKeyPath: "totalHP")!)"
+        cell.characterImageView.image = UIImage(named: imageName)
         
         return cell
     }
@@ -67,26 +73,18 @@ class AdventurersTableViewController: UITableViewController {
         return 128
     }
 
-    // MARK: Actions
-    //@IBAction func unwindToAdventurersList(sender: UIStoryboardSegue) {
-        //if let sourceViewController = sender.source as? NewAdventurerViewController, //let meal = sourceViewController.meal{
-            
-            // Add a new meal.
-            //let newIndexPath = IndexPath(row: meals.count, section: 0)
-            
-            //meals.append(meal)
-            //tableView.insertRows(at: [newIndexPath], with: .automatic)
-        //}
+    // MARK: - Actions
+
     
     @IBAction func unwindToTableViewWithSavedData(sender: UIStoryboardSegue) {
         // Code to increase number of rows? -- Miguel
         if let sourceViewController = sender.source as? NewAdventurerViewController,
             let newAdventurer = sourceViewController.finalAdventurer {
-                let newIndexPath = IndexPath(row: people.count, section: 0)
-                people.append(newAdventurer)
+                let newIndexPath = IndexPath(row: adventurers.count, section: 0)
+                adventurers.append(newAdventurer)
             
-            // CODE WORKS UP TILL HERE; NEED TO REPLACE CURRENT TABLE VIEW CELL ITEMS WITH NSMANAGEDOBJECTS
-            //tableView.insertRows(at: [newIndexPath], with: .automatic)
+           
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
         }
         
         // Case for unwinding from Quest Log
@@ -161,10 +159,15 @@ class AdventurersTableViewController: UITableViewController {
                 fatalError("The selected cell is not being displayed by the table")
             }
             
+            
             let selectedAdventurer = adventurers[indexPath.section]
             //print("Selected adventurer:", selectedAdventurer.name)
-            questLogDetailViewController.adventurer = selectedAdventurer
             
+            questLogDetailViewController.adventurer = selectedAdventurer
+        case "newAdventurerRecruit":
+            guard let newAdventurerVC = segue.destination as? NewAdventurerViewController else {
+                fatalError("Unexpected sender: \(segue.destination)")
+            }
         default:
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
         }

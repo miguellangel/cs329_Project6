@@ -112,7 +112,7 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
         adventurer.setValue(appearance, forKey: "appearance")
         adventurer.setValue(1, forKey: "level")
         
-        let attack = Int.random(in: 0...5)
+        let attack = Float.random(in: 0...5)
         let hp = Int.random(in: 90...150)
         
         adventurer.setValue(attack , forKey: "attack")
@@ -132,40 +132,6 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
     
     }
     
-    
-    //MARK: - Add Adventurer
-//    func addAdventurer(name : String, profession : String, appearance : String) -> NSManagedObject {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return NSManagedObject()
-//        }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let entity = NSEntityDescription.entity(forEntityName: "Adventurerr", in: managedContext)
-//        let adventurer = NSManagedObject(entity: entity!, insertInto: managedContext)
-//
-//        adventurer.setValue(name, forKey: "name")
-//        adventurer.setValue(profession, forKey: "profession")
-//        adventurer.setValue(appearance, forKey: "appearance")
-//        adventurer.setValue(1, forKey: "level")
-//
-//        let attack = Int.random(in: 0...5)
-//        let hp = Int.random(in: 90...150)
-//
-//        adventurer.setValue(attack , forKey: "attack")
-//        adventurer.setValue(hp, forKey: "currentHP")
-//        adventurer.setValue(hp, forKey: "totalHP")
-//
-//        do {
-//            try managedContext.save()
-//        } catch {
-//            let nserror = error as NSError
-//            NSLog("Unable to save \(nserror), \(nserror.userInfo)")
-//            abort()
-//        }
-//
-//        return adventurer
-//
-//
-//    }
     
     // MARK: - Navigation
     

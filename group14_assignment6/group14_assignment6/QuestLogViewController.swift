@@ -8,6 +8,7 @@
 
 import UIKit
 import os.log
+import CoreData
 
 class QuestLogViewController: UIViewController {
     
@@ -25,13 +26,24 @@ class QuestLogViewController: UIViewController {
      This value is either passed by `MealTableViewController` in `prepare(for:sender:)`
      or constructed as part of adding a new meal.
      */
-    var adventurer: Adventurer?
+    var adventurer: NSManagedObject?
     var timer: Timer?
     //var timer2 = Timer()
     var defeatedEnemies = 0
     var enemyHP = Float.random(in: 0 ... 100)
-    var adventurerHP: Float = 0
-    var adventurerLevel: Int = 0
+    
+    // Adventurer Attributes
+    var name : String?
+    var level : Int?
+    var profession : String?
+    var attack : Float?
+    var appearance : String?
+    var adventurerHP: Float?
+    var totalHP: Float?
+    var adventurerLevel: Int?
+    
+    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,56 +54,80 @@ class QuestLogViewController: UIViewController {
         
         // Set up views for new Quest for selected adventurer.
         if let adventurer = adventurer {
-            characterImage.image = UIImage(named: adventurer.image)
-            nameLabel.text = adventurer.name
-            levelLabel.text = String(adventurer.level)
-            occupationLabel.text = adventurer.profession
-            attackLabel.text = String(adventurer.attackScore)
-            hpLabel.text = adventurer.hpScore + "/" + adventurer.hpScore
+            let imageName = adventurer.value(forKey: "appearance") as! String
+            // Fill-in label data from NSObject
+            characterImage.image = UIImage(named: imageName)
+            nameLabel.text = adventurer.value(forKeyPath: "name") as? String
+            levelLabel.text = "\(adventurer.value(forKeyPath: "level")!)"
+            occupationLabel.text = adventurer.value(forKeyPath: "profession") as? String
+            var attack_ = adventurer.value(forKey: "attack") as! Float
+            attackLabel.text = String(format: "%.2f", attack_)
+
+            hpLabel.text = "\(adventurer.value(forKeyPath: "currentHP")!)" + "/" + "\(adventurer.value(forKeyPath: "totalHP")!)"
+            
+            // Set attribute values for class use
+            self.name = adventurer.value(forKeyPath: "name") as! String
+            self.level = adventurer.value(forKey: "level") as! Int
+            self.profession = adventurer.value(forKey: "profession") as! String
+            self.attack = adventurer.value(forKey: "attack") as! Float
+            self.appearance = adventurer.value(forKey: "appearance") as! String
+            self.adventurerHP = adventurer.value(forKeyPath: "currentHP") as! Float
+            self.adventurerLevel = adventurer.value(forKeyPath: "level") as! Int
+            self.totalHP = adventurer.value(forKey: "totalHP") as! Float
         }
-        //print(String(adventurer!.hpScore) + " is hpScore")
-        
-        self.adventurerHP = Float(adventurer!.hpScore) as! Float
-        
-        self.adventurerLevel = Int(adventurer!.level)
     }
     
     @objc func fireTimer(timer: Timer) {
         // Leveling up
         if (((defeatedEnemies % 3) == 0) && (defeatedEnemies != 0)){
-            adventurerLevel += 1
-            levelLabel.text = String(adventurerLevel)
-            textView.insertText("\(adventurer!.name) has leveled up to Level \(adventurerLevel)\n")
+            print("Should level up")
+            let previous = self.adventurerLevel!
+            
+            if adventurer!.value(forKey: "level") != nil {
+                adventurer!.setValue(previous + 1, forKey: "level")
+            }
+            
+            levelLabel.text = "\(adventurerLevel)"
+            textView.insertText("\(name!) has leveled up to Level \(adventurerLevel)\n")
         }
         
         // Dead enemy
         if enemyHP <= 0 {
+            print("Enemy died")
             defeatedEnemies += 1
             textView.insertText("A new enemy appears!\n")
             enemyHP = Float.random(in: 0 ... 50)
         }
         
         // Adventurer attack
-        let adventurerHit = Float.random(in: 0 ... 10) * adventurer!.attackScore
+        let adventurerHit = Float.random(in: 0 ... 10) * self.attack!
         enemyHP -= adventurerHit
-        textView.insertText("\(adventurer!.name) attacks for " + String(format: "%.2f", adventurerHit) + " damage\n")
+        print(adventurerHit, enemyHP)
+        
+        textView.insertText("\(self.name) attacks for " + String(format: "%.2f", adventurerHit) + " damage\n")
         
         // Monster attack
         let picker = Int.random(in: 0...1)
+        print(picker)
         if picker == 0 {
             textView.insertText("The monster is waiting...\n")
         } else {
             let monsterHit = Float.random(in: 0 ... 30)
             textView.insertText("The monster attacks for " + String(format: "%.2f", monsterHit) + " damage\n")
-            adventurerHP -= monsterHit
-            hpLabel.text = String(format: "%.2f", adventurerHP) + "/" + adventurer!.hpScore
+    
+            if adventurer!.value(forKey: "currentHP") != nil {
+                // Accomplish the same as ~ adventurerHP -= monsterHit
+                adventurer!.setValue(self.adventurerHP! - monsterHit, forKey: "currentHP")
+            }
+
+            hpLabel.text = String(format: "%.2f", self.adventurerHP as! Float) + "/" + String(format: "%.2f", self.totalHP as! Float)
         }
         
         // Dead adventurer
-        if adventurerHP <= 0 {
-            textView.insertText("\(adventurer!.name) died! Quest ended.\n")
+        if ((self.adventurerHP?.isLess(than: 0.0))!) {
+            textView.insertText("\(self.name) died! Quest ended.\n")
             //timer.invalidate()
-            stopTimer(timer: timer)
+            stopTimer(timer: timer) 
         }
     }
     
@@ -105,7 +141,7 @@ class QuestLogViewController: UIViewController {
     }
     
      // MARK: - Navigation
-     
+    
      // This method lets you configure a view controller before it's presented.
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -117,17 +153,7 @@ class QuestLogViewController: UIViewController {
             return
         }
         
-        //print("End quest button has been pressed, prepped for segue!")
-        
-        let name = nameLabel.text ?? ""
-        let photo = adventurer!.image
-        let level = Int(levelLabel.text!)
-        let profession = adventurer!.profession
-        let attack = adventurer!.attackScore
-        let hp = adventurer!.hpScore
-        
-        // Set the meal to be passed to MealTableViewController after the unwind segue.
-        adventurer = Adventurer(name: name, level: level!, profession: profession, attackScore: attack, hpScore: hp, image: photo)
+
      }
 }
 
