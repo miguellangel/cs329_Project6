@@ -33,15 +33,14 @@ class QuestLogViewController: UIViewController {
     var enemyHP = Float.random(in: 0 ... 100)
     
     // Adventurer Attributes
-    var name : String?
-    var level : Int?
-    var profession : String?
-    var attack : Float?
-    var appearance : String?
-    var adventurerHP: Float?
-    var totalHP: Float?
-    var adventurerLevel: Int?
-    
+//    var name : String?
+//    var level : Int?
+//    var profession : String?
+//    var attack : Float?
+//    var appearance : String?
+    var currentHP: Float?
+//    var totalHP: Float?
+//    var adventurerLevel: Int?
     
 
 
@@ -66,14 +65,7 @@ class QuestLogViewController: UIViewController {
             hpLabel.text = "\(adventurer.value(forKeyPath: "currentHP")!)" + "/" + "\(adventurer.value(forKeyPath: "totalHP")!)"
             
             // Set attribute values for class use
-            self.name = adventurer.value(forKeyPath: "name") as! String
-            self.level = adventurer.value(forKey: "level") as! Int
-            self.profession = adventurer.value(forKey: "profession") as! String
-            self.attack = adventurer.value(forKey: "attack") as! Float
-            self.appearance = adventurer.value(forKey: "appearance") as! String
-            self.adventurerHP = adventurer.value(forKeyPath: "currentHP") as! Float
-            self.adventurerLevel = adventurer.value(forKeyPath: "level") as! Int
-            self.totalHP = adventurer.value(forKey: "totalHP") as! Float
+            self.currentHP = adventurer.value(forKey: "currentHP") as! Float
         }
     }
     
@@ -81,33 +73,26 @@ class QuestLogViewController: UIViewController {
         // Leveling up
         if (((defeatedEnemies % 3) == 0) && (defeatedEnemies != 0)){
             print("Should level up")
-            let previous = self.adventurerLevel!
             
-            if adventurer!.value(forKey: "level") != nil {
-                adventurer!.setValue(previous + 1, forKey: "level")
-                //self.level += 1
-                //levelLabel.text = "\(self.level)"
-                levelLabel.text = "\(adventurer!.value(forKeyPath: "level")!)"
-            }
-            
-            levelLabel.text = "\(adventurerLevel!)"
-            textView.insertText("\(name!) has leveled up to Level \(adventurerLevel!)\n")
+            var adventurerLevel = Int(levelLabel.text!)! + 1
+            levelLabel.text = "\(adventurerLevel)"
+            textView.insertText("\(nameLabel.text!) has leveled up to Level \(adventurerLevel)\n")
         }
         
         // Dead enemy
         if enemyHP <= 0 {
             print("Enemy died")
             defeatedEnemies += 1
-            print(defeatedEnemies)
+            print("Defeated: ", defeatedEnemies)
             textView.insertText("A new enemy appears!\n")
             enemyHP = Float.random(in: 0 ... 50)
         }
         
         // Adventurer attack
-        let adventurerHit = Float.random(in: 0 ... 10) * self.attack!
+        let adventurerHit = Float.random(in: 0 ... 10) * Float(attackLabel.text!)!
         enemyHP -= adventurerHit
         
-        textView.insertText("\(self.name!) attacks for " + String(format: "%.2f", adventurerHit) + " damage\n")
+        textView.insertText("\(nameLabel.text!) attacks for " + String(format: "%.2f", adventurerHit) + " damage\n")
         
         // Monster attack
         let picker = Int.random(in: 0...1)
@@ -116,18 +101,18 @@ class QuestLogViewController: UIViewController {
         } else {
             let monsterHit = Float.random(in: 0 ... 30)
             textView.insertText("The monster attacks for " + String(format: "%.2f", monsterHit) + " damage\n")
-    
-            if adventurer!.value(forKey: "currentHP") != nil {
-                // Accomplish the same as ~ adventurerHP -= monsterHit
-                adventurer!.setValue(self.adventurerHP! - monsterHit, forKey: "currentHP")
-            }
+//            var adventurerHP : Float = adventurer!.value(forKey: "currentHP") as! Float
+            var adventurerHP : Float = self.currentHP!
+            adventurerHP -= monsterHit
+            var totalHP : Float = adventurer!.value(forKey: "totalHP") as! Float
+           self.currentHP = adventurerHP
 
-            hpLabel.text = String(format: "%.2f", self.adventurerHP as! Float) + "/" + String(format: "%.2f", self.totalHP as! Float)
+            hpLabel.text = String(format: "%.2f", adventurerHP) + "/" + String(format: "%.2f", totalHP)
         }
         
         // Dead adventurer
-        if ((self.adventurerHP?.isLess(than: 0.0))!) {
-            textView.insertText("\(self.name) died! Quest ended.\n")
+        if (self.currentHP!.isLess(than: 0.0)) {
+            textView.insertText("\(nameLabel.text!) died! Quest ended.\n")
             //timer.invalidate()
             stopTimer(timer: timer)
         }
