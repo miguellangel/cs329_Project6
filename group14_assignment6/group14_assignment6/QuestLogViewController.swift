@@ -31,6 +31,7 @@ class QuestLogViewController: UIViewController {
     //var timer2 = Timer()
     var defeatedEnemies = 0
     var enemyHP = Float.random(in: 0 ... 100)
+    var originalHP : Int?
     
     // Adventurer Attributes
 //    var name : String?
@@ -66,6 +67,7 @@ class QuestLogViewController: UIViewController {
             
             // Set attribute values for class use
             self.currentHP = adventurer.value(forKey: "currentHP") as! Float
+            originalHP = Int(self.currentHP!)
         }
     }
     
@@ -125,6 +127,17 @@ class QuestLogViewController: UIViewController {
     @IBAction func endQuestEndsTimer(_ sender: UIButton) {
         //print("End quest button has been pressed, timer called!")
         stopTimer(timer: self.timer!)
+        // Update Core Data
+        // For every level upgrade, increase total HP by 5
+        
+        let finalLevel = Int(levelLabel.text!)!
+        
+        adventurer!.setValue(finalLevel, forKey: "level")
+        
+        var finalTotalHP = self.originalHP
+        adventurer!.setValue(finalTotalHP, forKey: "currentHP")
+        adventurer!.setValue(finalTotalHP, forKey: "totalHP")
+        
     }
     
      // MARK: - Navigation

@@ -112,7 +112,7 @@ class NewAdventurerViewController: UIViewController, UITextFieldDelegate, UIColl
         adventurer.setValue(appearance, forKey: "appearance")
         adventurer.setValue(1, forKey: "level")
         
-        let attack = Float.random(in: 0...5)
+        let attack = Float.random(in: 1...5)
         let hp = Int.random(in: 90...150)
         
         adventurer.setValue(attack , forKey: "attack")
