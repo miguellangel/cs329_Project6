@@ -90,8 +90,9 @@ class AdventurersTableViewController: UITableViewController {
             let adventurer = sourceViewController.adventurer {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 // Update an existing adventurer with new level.
-                adventurers[selectedIndexPath.section] = adventurer
-                tableView.reloadSections(IndexSet(integersIn: 0...adventurers.count-1), with: .none)
+                adventurers[selectedIndexPath.row] = adventurer //instead of .section] =
+                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                //tableView.reloadSections(IndexSet(integersIn: 0...adventurers.count-1), with: .none)
             }
             
         }
