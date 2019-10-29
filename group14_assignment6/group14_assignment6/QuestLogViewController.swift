@@ -85,16 +85,20 @@ class QuestLogViewController: UIViewController {
             
             if adventurer!.value(forKey: "level") != nil {
                 adventurer!.setValue(previous + 1, forKey: "level")
+                //self.level += 1
+                //levelLabel.text = "\(self.level)"
+                levelLabel.text = "\(adventurer!.value(forKeyPath: "level")!)"
             }
             
-            levelLabel.text = "\(adventurerLevel)"
-            textView.insertText("\(name!) has leveled up to Level \(adventurerLevel)\n")
+            levelLabel.text = "\(adventurerLevel!)"
+            textView.insertText("\(name!) has leveled up to Level \(adventurerLevel!)\n")
         }
         
         // Dead enemy
         if enemyHP <= 0 {
             print("Enemy died")
             defeatedEnemies += 1
+            print(defeatedEnemies)
             textView.insertText("A new enemy appears!\n")
             enemyHP = Float.random(in: 0 ... 50)
         }
@@ -102,13 +106,11 @@ class QuestLogViewController: UIViewController {
         // Adventurer attack
         let adventurerHit = Float.random(in: 0 ... 10) * self.attack!
         enemyHP -= adventurerHit
-        print(adventurerHit, enemyHP)
         
-        textView.insertText("\(self.name) attacks for " + String(format: "%.2f", adventurerHit) + " damage\n")
+        textView.insertText("\(self.name!) attacks for " + String(format: "%.2f", adventurerHit) + " damage\n")
         
         // Monster attack
         let picker = Int.random(in: 0...1)
-        print(picker)
         if picker == 0 {
             textView.insertText("The monster is waiting...\n")
         } else {
@@ -127,7 +129,7 @@ class QuestLogViewController: UIViewController {
         if ((self.adventurerHP?.isLess(than: 0.0))!) {
             textView.insertText("\(self.name) died! Quest ended.\n")
             //timer.invalidate()
-            stopTimer(timer: timer) 
+            stopTimer(timer: timer)
         }
     }
     

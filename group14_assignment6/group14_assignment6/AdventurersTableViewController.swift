@@ -38,8 +38,6 @@ class AdventurersTableViewController: UITableViewController {
         }
     }
     
-    
-    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView,
@@ -160,7 +158,7 @@ class AdventurersTableViewController: UITableViewController {
             }
             
             
-            let selectedAdventurer = adventurers[indexPath.section]
+            let selectedAdventurer = adventurers[indexPath.row]
             //print("Selected adventurer:", selectedAdventurer.name)
             
             questLogDetailViewController.adventurer = selectedAdventurer
